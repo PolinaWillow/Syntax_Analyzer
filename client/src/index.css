@@ -1,0 +1,34 @@
+@import 'bootstrap/dist/css/bootstrap.css';
+
+@import '../src/static/fonts/HelveticaNeueCyr/stylesheet.css';
+@import '../src/static/fonts/NeueMachina/stylesheet.css';
+@import '../src/static/fonts/Roboto/stylesheet.css';
+@import '../src/static/fonts/RobotoCondensed/stylesheet.css';
+@import '../src/static/fonts/RussoOne/stylesheet.css';
+
+@import '../src//static/css/nav.css';
+@import '../src/static/css/button.css';
+@import '../src/static/css/backward.css';
+@import '../src/static/css/headers.css';
+@import '../src/static/css/inputs.css';
+
+:root{
+  font-size: 16px;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-dark-blue: #1F0837;
+  --color-dark-purple: #5A199E;
+  --color-purple: #923DEB;
+  --color-violet: #D4ABFF;
+  --color-lavender: #E5D0FC;
+  --color-light-lavender: #EBD8FF;
+  --color-yellow: #EBEB0C; 
+}
+
+body{
+  background-image: url('../src/static/svg_img/Bacground.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-left: 5%;
+  padding-right: 5%;
+}

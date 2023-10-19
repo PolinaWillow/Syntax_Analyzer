@@ -1,0 +1,11 @@
+.navbar{
+    width: 100%;
+    padding-top: 1%;
+}
+
+.navbar_logo{
+    display: inline-block;
+    width: 20%;
+    font-family: 'Neue Machina'; 
+    font-weight: 900; 
+}
