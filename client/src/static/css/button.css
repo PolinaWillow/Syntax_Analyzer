@@ -8,7 +8,7 @@
 }
 
 .btn-Big{
-    width: 30%;
+    width: 40%;
     padding: 1% 6%;
     text-align: center;
     background-color: var(--color-yellow);
@@ -21,6 +21,7 @@
 
 .btn-Small{
     width: 15%;
+    min-width: fit-content;
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     text-align: center;
