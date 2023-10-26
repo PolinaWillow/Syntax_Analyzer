@@ -52,7 +52,7 @@ export const ResultPage = () => {
 
         </div>
 
-        <Backward link={() => navigate('/pages/HomePage')}/>
+        <Backward link={() => navigate('/')}/>
 
         <footer>
             <div align="left">

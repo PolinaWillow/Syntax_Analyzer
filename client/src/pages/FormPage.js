@@ -57,7 +57,7 @@ export const FormPage = () => {
                 <input class="input-word" name="word"/>
                 <div align="center">
                     <div class="button-submit">
-                    <Button onClick={() => navigate('/pages/ResultPage')} size="sm" text="Анализировать"/> 
+                    <Button onClick={() => navigate('/ResultPage')} size="sm" text="Анализировать"/> 
                     </div>
                 </div>
                 </div>
@@ -66,7 +66,7 @@ export const FormPage = () => {
             </form>
         </div>
 
-        <Backward link={() => navigate('/pages/HomePage')}/>
+        <Backward link={() => navigate('/')}/>
 
         <footer>
             <div align="left">
