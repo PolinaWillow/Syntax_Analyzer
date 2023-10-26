@@ -1,16 +1,25 @@
-@import 'bootstrap/dist/css/bootstrap.css';
+@import './static/fonts/HelveticaNeueCyr/stylesheet.css';
+@import './static/fonts/NeueMachina/stylesheet.css';
+@import './static/fonts/Roboto/stylesheet.css';
+@import './static/fonts/RobotoCondensed/stylesheet.css';
+@import './static/fonts/RussoOne/stylesheet.css';
 
-@import '../src/static/fonts/HelveticaNeueCyr/stylesheet.css';
-@import '../src/static/fonts/NeueMachina/stylesheet.css';
-@import '../src/static/fonts/Roboto/stylesheet.css';
-@import '../src/static/fonts/RobotoCondensed/stylesheet.css';
-@import '../src/static/fonts/RussoOne/stylesheet.css';
+@import './static/css/nav.css';
+@import './static/css/button.css';
+@import './static/css/backward.css';
+@import './static/css/headers.css';
+@import './static/css/inputs.css';
+@import './static/css/footer.css';
+@import './static/css/page_form.css';
+@import './static/css/page_result.css';
 
-@import '../src//static/css/nav.css';
-@import '../src/static/css/button.css';
-@import '../src/static/css/backward.css';
-@import '../src/static/css/headers.css';
-@import '../src/static/css/inputs.css';
+body{
+  background-image: url('./static/svg_img/Background.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 
 :root{
   font-size: 16px;
@@ -23,12 +32,4 @@
   --color-lavender: #E5D0FC;
   --color-light-lavender: #EBD8FF;
   --color-yellow: #EBEB0C; 
-}
-
-body{
-  background-image: url('../src/static/svg_img/Bacground.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-left: 5%;
-  padding-right: 5%;
 }
