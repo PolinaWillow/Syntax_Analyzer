@@ -16,13 +16,11 @@ export const HomePage = () => {
                 Анализатор позволяет сделать полный синтаксический разбор предложения, найти определенные члены предложения, а так же выделить предложения, в которых выбранным членом предложения является определенное слово
             </p>
             </div>
-            <Button onClick={() => navigate('/FormPage')} size="lg" text="Анализировать"/> 
-            <footer>
-            <div align="left">
-                &nbsp;2023 - Бригада
-            </div>
-            </footer>
+            <Button onClick={() => navigate('/FormPage')} size="lg" text="Начать анализ"/> 
         </div>
+        <footer align="left">
+                &nbsp;2023 - Бригада
+        </footer>
         </>
     )
 }

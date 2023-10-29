@@ -1,6 +1,5 @@
 .button-submit{
     margin-top: 30px;
-    width: 40%;
   }
 
   .input-word{
@@ -28,7 +27,7 @@
   }
 
   .settings-div{
-    padding-left: 30px;
+    margin-left: 130px;
   }
 
   .settings-block-label{
@@ -77,7 +76,6 @@
   }
 
   .side{
-    margin-top: 40px;
     display: inline-block;
     vertical-align: top;
     width: 48%;
