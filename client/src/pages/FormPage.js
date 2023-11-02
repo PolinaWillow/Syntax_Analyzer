@@ -9,7 +9,6 @@ import { useMessage } from '../hooks/message.hook'
 
 export const FormPage = () => {
     const navigate = useNavigate();
-
     const {loading, request, error, clearError} = useHttp()
 
     //Отслеживание ошибок
@@ -21,19 +20,68 @@ export const FormPage = () => {
 
 
     const [form, setForm] = useState({
-        text:"", file: "", typeAnalyze: "", partial: "", keyWord: ""
+        text:"", file: "", typeAnalyze: "", partial: [], word: ""
     })
 
-    const ChangeHandler = event =>{
-        setForm({...form, [event.target.name]:event.target.value})
+    const settingsRadio = [
+        {type: "radio", name: "typeAnalyze", value: "full_analysis", valueRu: "Полный анализ"},
+        {type: "radio", name: "typeAnalyze", value: "partial_analysis", valueRu: "Определить отдельные члены предложения"},
+        {type: "radio", name: "typeAnalyze", value: "word_analysis", valueRu: "Анализ по слову"},
+    ]
 
-        console.log(form)
+    const settingsCheckbox = [
+        {type: "checkbox", name: "partial", value: "subject", valueRu: "Подлежащее"},
+        {type: "checkbox", name: "partial", value: "predicate", valueRu: "Сказуемое"},
+        {type: "checkbox", name: "partial", value: "addition", valueRu: "Дополнение"},
+    ]
+
+    const [settingsPartialVisible, setSettingsPartialVisible] = useState(false)
+    const [settingsWordVisible, setSettingsWordVisible] = useState(false)
+
+    const ChangeHandler = event =>{
+        if(event.target.name === "partial"){
+            //Добавление настроек checkbox
+            let partialMas = form.partial
+            //Если элемент выбрали, то добавляем в массив иначе удаляем из массива
+            if(event.target.checked) partialMas.push(event.target.value)
+            else {
+                let index = partialMas.indexOf(event.target.value)
+                partialMas.splice(index, 1)
+            }
+            setForm({...form, [event.target.name]:partialMas})
+            setForm({...form, word:""})
+
+        }else {
+            setForm({...form, [event.target.name]:event.target.value})
+            /*if(event.target.value==="full_analysis"){
+                setForm({...form, word:""})
+                setForm({...form, partial:[]})
+            }else if(event.target.value==="partial_analysis")setForm({...form, word:""})
+            else if(event.target.value==="word_analysis")setForm({...form, partial:[]})*/
+            //setForm({...form, [event.target.name]:event.target.value})
+        }
+        
+        //Изменение состояния отвидимости поднастроек
+        if (event.target.value === "partial_analysis"){
+            setSettingsPartialVisible(true)
+            setSettingsWordVisible(false)
+        }
+        else if (event.target.value === "word_analysis"){
+            setSettingsPartialVisible(false)
+            setSettingsWordVisible(true)
+        }else if(event.target.value === "full_analysis"){
+            setSettingsPartialVisible(false)
+            setSettingsWordVisible(false)
+        }
     }
+
+
 
     const SendForm = async()=>{
         try {
-            const data = await request('Наш сервер', 'POST', {...form})
-            console.log('Data', data) 
+            console.log(form)
+            //const data = await request('Наш сервер', 'POST', {...form})
+            //console.log('Data', data) 
         } catch (error) {
 
         }
@@ -56,37 +104,33 @@ export const FormPage = () => {
                 <div className="side" align="right">
                     <div className="settings-div" align="left">
                         <h3>Настройки</h3>
-                        <div className='settings-par'>
-                            <input type="radio" value={"full_analysis"} name="typeAnalyze" onChange={ChangeHandler}/>
-                            <label htmlFor="typeAnalyze" className="settings-label" >Полный анализ</label>
-                        </div>
-                        <div className='settings-par'>
-                            <input type="radio" value={"partial_analysis"} name="typeAnalyze" onChange={ChangeHandler}/>
-                            <label htmlFor="typeAnalyze" className="settings-label">Анализ по членам предложениям</label>
-                        </div>
-                        <div className="settings-choice">
-                            <div className="settings-choice-inline">
-                            <div className='settings-choice-part settings-par'>
-                                <input type="checkbox" value={"subject"} name="partial" onChange={ChangeHandler}/>
-                                <label className="settings-label">Подлежащее</label>
-                            </div>
-                            <div className='settings-choice-part settings-par'>
-                                <input type="checkbox" value={"predicate"} name="partial" onChange={ChangeHandler}/>
-                                <label className="settings-label">Сказуемое</label>
-                            </div>
-                            </div>
-                            <div className="settings-choice-inline">
-                                <div className='settings-choice-part settings-par'>
-                                    <input type="checkbox" value={"predicate"} name="partial" onChange={ChangeHandler}/>
-                                    <label className="settings-label">Дополнение</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='settings-par'>
-                            <input type="radio" value={"word_analysis"} name="typeAnalyze" onChange={ChangeHandler}/>
-                            <label className="settings-label">Анализ по слову:</label>
-                        </div>
-                        <input className="input-word" name="word"/>
+                        {
+                            settingsRadio.map((elem, index)=>
+                                <>
+                                    <div className='settings-par' key={index}>
+                                        <input type="radio" value={elem.value} name={elem.name} onChange={ChangeHandler}/>
+                                        <label htmlFor={elem.type} className="settings-label">{elem.valueRu}</label>
+                                    </div>
+                                    {(settingsPartialVisible && (elem.value==="partial_analysis") )&&
+                                        <div className="settings-choice">
+                                            {
+                                                settingsCheckbox.map((elem, index)=>
+                                                    <div className='settings-choice-part settings-par'>
+                                                        <input type="checkbox" value={elem.value} name={elem.name} onChange={ChangeHandler}/>
+                                                        <label className="settings-label">{elem.valueRu}</label>
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
+                                    }
+                                    {(settingsWordVisible && (elem.value==="word_analysis") )&&
+                                        <input className="input-word" name="word" placeholder="Введите анализируемое слово" onChange={ChangeHandler}/>
+                                    }
+                                </>
+                                
+                            )
+                        }
+                        
                         <div align="center">
                             <div className="button-submit">
                                 <Button onClick={SendForm} size="sm" text="Анализировать"/> 
