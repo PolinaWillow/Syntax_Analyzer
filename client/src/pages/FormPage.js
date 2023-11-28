@@ -7,6 +7,8 @@ import {useNavigate} from "react-router-dom";
 import { useHttp } from '../hooks/http.hook'
 import { useMessage } from '../hooks/message.hook'
 
+import axios from 'axios'
+
 export const FormPage = () => {
     const navigate = useNavigate();
     const {loading, request, error, clearError} = useHttp()
@@ -20,7 +22,7 @@ export const FormPage = () => {
 
 
     const [form, setForm] = useState({
-        text:"", file: "", typeAnalyze: "", partial: [], word: ""
+        text:"", /*file: "", */typeAnalyze: "", /*partial: [],*/ word: ""
     })
 
     const settingsRadio = [
@@ -80,7 +82,19 @@ export const FormPage = () => {
     const SendForm = async()=>{
         try {
             console.log(form)
-            //const data = await request('Наш сервер', 'POST', {...form})
+
+            const customHeaders = {
+                'content-type': 'application/json',
+              };
+            const url = 'http://localhost:8500/start_analyze'
+            axios.post(url, {...form}, customHeaders)
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+            //const data = await request('http://127.0.0.1:8500/start_analyze', 'POST', {...form})
             //console.log('Data', data) 
         } catch (error) {
 

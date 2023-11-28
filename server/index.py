@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import json as js
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -16,19 +17,29 @@ predictor = RNNMorphPredictor(language="ru")
 class Item(BaseModel):
     text: str
     #file: str | None = None #Исправить на соответствующий тип данных
-    typeAnalyzer: str
+    typeAnalyze: str
     #partial: [] Разобраться с типом данных для массива
     word: str #| None = None
 
 app = FastAPI()
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
     print ("Hello world")
     return {"Hello": "World"}
 
-@app.post("/start_analyze")
-def create_item(item: Item):
+@app.head('/')
+@app.post('/start_analyze')
+async def create_item(item: Item):
     print(item)
     words = PT.ParseText(item.text)
     analysed_words = predictor.predict(words)
