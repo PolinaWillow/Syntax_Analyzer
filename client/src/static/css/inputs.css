@@ -55,5 +55,16 @@ input[type='radio']:checked{
     box-shadow: inset 1px 2px 4px var( --color-violet);
 }
 
+<<<<<<< HEAD
+=======
+@media (max-width: 1920px){
+    input{
+        font-size: 1.1rem;
+    }
+    label{
+        font-size: 1.1rem;
+    }
+}
+>>>>>>> test
 
 

@@ -4,6 +4,11 @@ h1{
     font-size: 4.625rem;
     text-shadow: 0.25rem 0.25rem 0rem var(--color-purple);
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> test
 h2{
     font-family: 'Roboto Condensed';
     font-weight: bold;
@@ -15,7 +20,11 @@ h3{
     font-family: 'Roboto Condensed';
     font-weight: 600;
     font-size: 1,5rem;
+<<<<<<< HEAD
     letter-spacing: -0.0938rem;
+=======
+    letter-spacing: -0.03rem;
+>>>>>>> test
 }
 
 p{
@@ -23,4 +32,17 @@ p{
     font-weight: normal;
     font-size: 1.25rem;
     line-height: 190%;
+<<<<<<< HEAD
+=======
+}
+
+
+@media (max-width: 1920px) {
+    h1{
+        font-size: 4rem;
+    }
+    p{
+        font-size: 1.1rem;
+    }
+>>>>>>> test
 }
