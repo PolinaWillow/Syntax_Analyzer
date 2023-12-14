@@ -64,4 +64,4 @@ async def create_item(item: Item):
 
 
     #Добавить обработчик для анализа, запись в бд и отправку файла с результатами анализа
-    return {"message": result}
+    return result
