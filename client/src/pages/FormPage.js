@@ -8,6 +8,7 @@ import { useHttp } from '../hooks/http.hook'
 import { useMessage } from '../hooks/message.hook'
 
 import axios from 'axios'
+import { saveAs } from 'file-saver';
 
 export const FormPage = () => {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const FormPage = () => {
 
 
     const [form, setForm] = useState({
-        text:"", /*file: "", */typeAnalyze: "", /*partial: [],*/ word: ""
+        fileName: "textFile1.pdf", text:"", typeAnalyze: "", partial: '', word: ""
     })
 
     const settingsRadio = [
@@ -86,16 +87,20 @@ export const FormPage = () => {
             const customHeaders = {
                 'content-type': 'application/json',
               };
-            const url = 'http://localhost:8500/start_analyze'
+            const url = 'http://127.0.0.1:7000/api/text_input/sendData'
             axios.post(url, {...form}, customHeaders)
             .then(function (response) {
-              console.log(response);
-            })
+              //console.log(response);
+            }).then(() =>
+                axios.get(`http://127.0.0.1:7000/api/text_input/getFileRes/${form.fileName}`,{responseType: 'blob'})
+            ).then((res) => {
+                //console.log(res)
+                const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+                saveAs(pdfBlob, 'resultAnalyze.pdf');
+            })       
             .catch(function (error) {
-              console.log(error);
+              //console.log(error);
             });
-            //const data = await request('http://127.0.0.1:8500/start_analyze', 'POST', {...form})
-            //console.log('Data', data) 
         } catch (error) {
 
         }
