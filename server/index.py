@@ -9,6 +9,9 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import ParseText as PT
 
 from rnnmorph.predictor import RNNMorphPredictor #Подключение нейронки
+
+import adverbials_analyzer #Подключение функции нахождения обстоятельств
+
 #Установка языка
 predictor = RNNMorphPredictor(language="ru")
 
@@ -44,6 +47,9 @@ async def create_item(item: Item):
     words = PT.ParseText(item.text)
     analysed_words = predictor.predict(words)
     
+    #Нахождение обстоятельств (принимает на вход массив слов, возвращает массив обстоятельств)
+    adverbials=adverbials_analyzer.find_adverbials(analysed_words)
+
     print(words)
     print(analysed_words)
     result = []
