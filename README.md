@@ -12,7 +12,7 @@ Python 3.7
 Все изменения заносятся в ветку test<br>
 После утверждения изменений они добавлябтся в ветку main создателем<br>
 
-**Запуск клиента**<br>
-npm start<br><br>
-**Запуск сервера**<br>
-Python3 -m uvicorn index:app --reload --port 8500
+**Запуск клиента и сервера проводника**<br>
+Из папки servers/conductor вызвать команду npm run dev<br><br>
+**Запуск анализатора**<br>
+Из папки servers/analyzer вызвать Python3 -m uvicorn index:app --reload --port 8500
