@@ -5,6 +5,8 @@ def find_adverbials(parsed_sentence):
 
     for elem in range(len(parsed_sentence)):
 
+        analyzed_sentence.append(None)
+
         #Определение соседних слов
         word=parsed_sentence[elem]
         word_before=None
@@ -19,18 +21,18 @@ def find_adverbials(parsed_sentence):
             #Возможно наличие перечня прилагательных между существительным в косвенном падеже и предлогом
             #Числительное + существительное в косвенном падеже = обстоятельство
             #Наречие до существительного в косвенном падеже = обстоятельство
-            if word.pos == "NOUN" and word.tag.case != "nomn":  
+            if word.tag.POS == "NOUN" and word.tag.case != "nomn":  
 
                 #Сущ. с предлогом
-                if word_before.pos == "PREP": 
+                if word_before.tag.POS == "PREP": 
                     adverbials.append(word_before.word+" "+word.word)
                     adv_positions.append(elem-1)
                     adv_positions.append(elem)
 
                 #Предлог - перечень прилагательных - существительное  
                 i=1
-                while (parsed_sentence[elem-i].pos == "ADJF" or parsed_sentence[elem-i].pos == "PREP") and i<len(parsed_sentence):
-                    if parsed_sentence[elem-i].pos == "PREP":
+                while (parsed_sentence[elem-i].tag.POS == "ADJF" or parsed_sentence[elem-i].tag.POS == "PREP") and i<len(parsed_sentence):
+                    if parsed_sentence[elem-i].tag.POS == "PREP":
                         adverbials.append(parsed_sentence[elem-i].word+" "+word.word)
                         adv_positions.append(elem-i)
                         adv_positions.append(elem)
@@ -38,55 +40,55 @@ def find_adverbials(parsed_sentence):
                     i += 1
 
                 #Числительное + существительное
-                if word_before.pos == "NUMR":
+                if word_before.tag.POS == "NUMR":
                     adverbials.append(word_before.word)
                     adv_positions.append(elem-1)
 
                 #Наречие до существительного
-                if word_before.pos == "ADVB":
+                if word_before.tag.POS == "ADVB":
                     adverbials.append(word_before.word)
                     adv_positions.append(elem-1)
 
             #Наречие до/после глагола = обстоятельство
-            if (word.pos == "VERB" or word.pos == "INFN") and (word_before.pos == "ADVB" or word_after.pos == "ADVB"):
-                if word_before.pos == "ADVB":
+            if (word.tag.POS == "VERB" or word.tag.POS == "INFN") and (word_before.tag.POS == "ADVB" or word_after.tag.POS == "ADVB"):
+                if word_before.tag.POS == "ADVB":
                     adverbials.append(word_before.word)
                     adv_positions.append(elem-1)
-                elif word_after.pos == "ADVB":
+                elif word_after.tag.POS == "ADVB":
                     adverbials.append(word_after.word)
                     adv_positions.append(elem+1)
 
             #Наречие до прилагательного = обстоятельство
             #Наречие до наречия = обстоятельство
-            if word.pos == "ADVB" and (word_after.pos == "ADJF" or word_after.pos == "ADJS" or word_after.pos == "ADVB"):
+            if word.tag.POS == "ADVB" and (word_after.tag.POS == "ADJF" or word_after.tag.POS == "ADJS" or word_after.tag.POS == "ADVB"):
                 adverbials.append(word.word)
                 adv_positions.append(elem)
 
             #Существительное с предлогом до/после глагола (без учёта падежа) = обстоятельство
-            if word.pos == "NOUN" and word.tag.case == "nomn" and word_before.pos == "PREP" and (word_after.pos == "INFN" or word_after.pos == "VERB"):
+            if word.tag.POS == "NOUN" and word.tag.case == "nomn" and word_before.tag.POS == "PREP" and (word_after.tag.POS == "INFN" or word_after.tag.POS == "VERB"):
                 adverbials.append(word_before.word+" "+word.word)
                 adv_positions.append(elem-1)
                 adv_positions.append(elem)
 
             #Существительное с союзами (как, словно, будто, как будто) = обстоятельство
-            if word.pos == "NOUN" and word_before.pos == "CONJ" and (word_before.word == "будто" or word_before.word == "словно" or word_before.word == "как"):
+            if word.tag.POS == "NOUN" and word_before.tag.POS == "CONJ" and (word_before.word == "будто" or word_before.word == "словно" or word_before.word == "как"):
                 adverbials.append(word_before.word+" "+word.word)
                 adv_positions.append(elem-1)
                 adv_positions.append(elem)
 
             #Деепричастие до существительного = обстоятельство
             #Возможно наличие перечня прилагательных между деепричастием и существительным
-            if word.pos == "NOUN":
+            if word.tag.POS == "NOUN":
                 
                 #Деепричастие с существительным
-                if word_before.pos == "GRND":
+                if word_before.tag.POS == "GRND":
                     adverbials.append(word_before.word)
                     adv_positions.append(elem-1)
 
                 #Деепричастие - перечень прилагательных - существительное  
                 i=1
-                while (parsed_sentence[elem-i].pos == "ADJF" or parsed_sentence[elem-i].pos == "GRND") and i<len(parsed_sentence):
-                    if parsed_sentence[elem-i].pos == "GRND":
+                while (parsed_sentence[elem-i].tag.POS == "ADJF" or parsed_sentence[elem-i].tag.POS == "GRND") and i<len(parsed_sentence):
+                    if parsed_sentence[elem-i].tag.POS == "GRND":
                         adverbials.append(parsed_sentence[elem-i].word+" "+word.word)
                         adv_positions.append(elem)
                         adv_positions.append(elem-i)
@@ -100,7 +102,5 @@ def find_adverbials(parsed_sentence):
     for elem in range(len(parsed_sentence)):
         if(elem in adv_positions):
             analyzed_sentence[elem]="adverbial"
-        else:
-            analyzed_sentence[elem]=None
         
     return analyzed_sentence

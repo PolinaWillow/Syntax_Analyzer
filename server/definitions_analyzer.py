@@ -4,6 +4,8 @@ def find_definitions(parsed_sentence):
     def_positions = [] #массив позиций определений в тексте
 
     for elem in range(len(parsed_sentence)):
+
+        analyzed_sentence.append(None)
 		
         #Определение соседних слов
         word=parsed_sentence[elem]
@@ -15,11 +17,11 @@ def find_definitions(parsed_sentence):
             word_after=parsed_sentence[elem+1]
 
         try:
-            if((word.pos =='ADJF' or word.pos == "ADJS") and word_after.pos=='NOUN'):
+            if((word.tag.POS =='ADJF' or word.tag.POS == "ADJS") and word_after.tag.POS=='NOUN'):
                 definitions.append(word.word)
                 def_positions.append(elem)
                  
-            if(word.pos=='NUMR' and word_after.pos=='NOUN'):
+            if(word.tag.POS=='NUMR' and word_after.tag.POS=='NOUN'):
                 definitions.append(word.word)
                 def_positions.append(elem)
          
@@ -30,7 +32,5 @@ def find_definitions(parsed_sentence):
     for elem in range(len(parsed_sentence)):
         if(elem in def_positions):
             analyzed_sentence[elem]="definition"
-        else:
-            analyzed_sentence[elem]=None
 
     return analyzed_sentence
