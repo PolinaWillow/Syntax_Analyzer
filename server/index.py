@@ -11,6 +11,7 @@ import ParseText as PT
 from rnnmorph.predictor import RNNMorphPredictor #Подключение нейронки
 
 import adverbials_analyzer #Подключение функции нахождения обстоятельств
+import definitions_analyzer #Подключение функции нахождения обстоятельств
 
 #Установка языка
 predictor = RNNMorphPredictor(language="ru")
@@ -47,15 +48,29 @@ async def create_item(item: Item):
     words = PT.ParseText(item.text)
     analysed_words = predictor.predict(words)
     
-    #Нахождение обстоятельств (принимает на вход массив слов, возвращает массив обстоятельств)
-    adverbials=adverbials_analyzer.find_adverbials(analysed_words)
+    #Нахождение обстоятельств (принимает на вход массив слов, возвращает массив ключей членов предложения)
+    analyzed_sentence_adverbials=adverbials_analyzer.find_adverbials(analysed_words)
 
-    print(words)
+    #Нахождение обстоятельств (принимает на вход массив слов, возвращает массив ключей членов предложения)
+    analyzed_sentence_definitions=definitions_analyzer.find_definitions(analysed_words)
+
+    #Формирование общего массива ключей
+    analyzed_sentence=[]
+    for i in range(len(analysed_words)):
+        analyzed_sentence[i]=None
+        
+        if(analyzed_sentence_adverbials[i] is not None):
+            analyzed_sentence[i]=analyzed_sentence_adverbials[i]
+        if(analyzed_sentence_definitions[i] is not None):
+            analyzed_sentence[i]=analyzed_sentence_definitions[i]
+        
+
+    #print(words)
     print(analysed_words)
     result = []
     for i in range(0,len(analysed_words)):
-        print(i, {words[i]: analysed_words[i].pos})
-        result.append({words[i]: analysed_words[i].pos})
+        print(i, {words[i]: analyzed_sentence[i]})
+        result.append({words[i]: analyzed_sentence[i]})
 
 
     #Добавить обработчик для анализа, запись в бд и отправку файла с результатами анализа
